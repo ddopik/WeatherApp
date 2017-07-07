@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SeedApplication</string>
+    <string name="fragment_one">Fragmet_One</string>
+    <string name="fragment_two">Fragmet_Two</string>
+    <string name="fragment_three">Fragmet_Three</string>
+    <string name="fragment_four">Fragmet_Four</string>
+    <string name="fragment_five">Fragmet_Five</string>
+</resources>
