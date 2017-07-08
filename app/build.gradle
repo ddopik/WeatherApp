@@ -1,15 +1,25 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'realm-android'
 android {
-    compileSdkVersion 23
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
     defaultConfig {
-        applicationId "com.example.ddopikmain.seedapplication"
-        minSdkVersion 17
-        targetSdkVersion 23
+        applicationId "com.example.ddopi.numuu"
+        minSdkVersion 15
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layouts/view_pager_section',
+                            'src/main/res/layouts',
+                            'src/main/res'
+                    ]
+        }
     }
     buildTypes {
         release {
@@ -24,22 +34,28 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    0
-//    compile 'com.android.support:design:23.0.1'
-//    compile 'com.google.dagger:dagger:2.8'
-//    provided 'javax.annotation:jsr250-api:1.0'
-//    compile 'com.google.code.gson:gson:2.6.2'
+////ButterKnif
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
+    ///stetho
+    // compile 'com.uphyca:stetho_realm:0.9.0'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.facebook.stetho:stetho:1.4.1'
+    compile 'com.uphyca:stetho_realm:2.0.0'
+    ////
+///Volly
+    compile 'com.android.volley:volley:1.0.0'
+    ///
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.google.dagger:dagger:2.8'
     compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.android.support:support-v4:25.3.0'
     testCompile 'junit:junit:4.12'
     provided 'javax.annotation:jsr250-api:1.0'
-
     testCompile 'junit:junit:4.12'
 }
-

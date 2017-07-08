@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="forgot_password_text">Forgot password</string>
+    <string name="prompt_email">User name</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="forget_passsword_text">Forgot password</string>
+    <string name="error_invalid_password">invalid password</string>
+    <string name="error_field_required">Required field</string>
+    <string name="error_invalid_email">invalid e-mail</string>
+</resources>

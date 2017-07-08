@@ -1,10 +1,12 @@
-package com.example.ddopikmain.seedapplication;
+package View;
 
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.ddopikmain.seedapplication.R;
 
 /**
  * Created by ddopikMain on 2/20/2017.
