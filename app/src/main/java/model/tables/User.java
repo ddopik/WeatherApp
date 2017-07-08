@@ -1,4 +1,4 @@
-package Model.Tables;
+package model.tables;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

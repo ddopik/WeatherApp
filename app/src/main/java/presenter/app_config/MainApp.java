@@ -1,4 +1,4 @@
-package Presenter.AppConfig;
+package presenter.app_config;
 
 /**
  * Created by ddopi on 5/30/2017.

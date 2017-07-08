@@ -1,4 +1,4 @@
-package Presenter.NetWork;
+package presenter.network;
 
 import android.content.Context;
 import android.util.Log;
@@ -15,8 +15,8 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-import Presenter.AppConfig.MainApp;
-import Presenter.LoginPresenter;
+import presenter.app_config.MainApp;
+import presenter.LoginPresenter;
 
 /**
  * Created by ddopik on 5/28/2017.

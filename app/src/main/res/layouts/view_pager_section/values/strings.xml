@@ -8,4 +8,8 @@
     <string name="error_invalid_password">invalid password</string>
     <string name="error_field_required">Required field</string>
     <string name="error_invalid_email">invalid e-mail</string>
+    <string name="action_sign_in_short">Password</string>
+    <string name="please_wait_facebooklogin">Please wait</string>
+    <string name="login_canceled_facebooklogin">Login caceld</string>
+    <string name="login_failed_facebooklogin">Log in with facebook failed</string>
 </resources>

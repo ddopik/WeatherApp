@@ -1,4 +1,4 @@
-package Presenter;
+package presenter;
 
 /**
  * Created by ddopi on 7/7/2017.

@@ -1,4 +1,4 @@
-package Presenter;
+package presenter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +11,11 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
-import Model.LoginModel;
-import Presenter.NetWork.LoginRequest;
-import Presenter.Util.JsonObjFetcher;
-import View.LoginActivity;
-import View.MainActivity;
+import model.LoginModel;
+import presenter.network.LoginRequest;
+import presenter.util.JsonObjFetcher;
+import view.LoginActivity;
+import view.MainActivity;
 
 /**
  * Created by ddopi on 5/28/2017.

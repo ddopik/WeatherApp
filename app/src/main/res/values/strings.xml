@@ -5,4 +5,7 @@
     <string name="fragment_three">Fragmet_Three</string>
     <string name="fragment_four">Fragmet_Four</string>
     <string name="fragment_five">Fragmet_Five</string>
+    <string name="facebook_app_id">1211618165631206</string>
+    <string name="fb_login_protocol_scheme">fb1211618165631206</string>
+
 </resources>

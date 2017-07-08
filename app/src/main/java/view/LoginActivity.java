@@ -1,8 +1,10 @@
-package View;
+package view;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +21,21 @@ import android.widget.Toast;
 
 
 import com.example.ddopikmain.seedapplication.R;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 
-import Presenter.AppConfig.MainApp;
-import Presenter.LoginPresenter;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import presenter.app_config.MainApp;
+import presenter.LoginPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -30,6 +44,15 @@ import butterknife.OnClick;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity {
+
+
+//    /For facebook
+    private CallbackManager callbackManager;
+
+    @BindView(R.id.connectWithFbButton)
+    public Button facebook_button;
+    ProgressDialog progress;
+    private String facebook_id,f_name, m_name, l_name, gender, profile_image, full_name, email_id;
 
 
     // UI references.
@@ -52,6 +75,9 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         loginPresenter = new LoginPresenter(this);
 
+        Log.e("LoginActivity","---->OnCreate()");
+
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -62,6 +88,78 @@ public class LoginActivity extends AppCompatActivity {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        facebook_id=f_name= m_name= l_name= gender= profile_image= full_name= email_id="";
+
+        //for facebook
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        //register callback object for facebook result
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                progress.show();
+                Profile profile = Profile.getCurrentProfile();
+                if (profile != null) {
+                    facebook_id = profile.getId();
+                    f_name = profile.getFirstName();
+                    m_name = profile.getMiddleName();
+                    l_name = profile.getLastName();
+                    full_name = profile.getName();
+                    profile_image = profile.getProfilePictureUri(400, 400).toString();
+                }
+                //Toast.makeText(FacebookLogin.this,"Wait...",Toast.LENGTH_SHORT).show();
+                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    email_id = object.getString("email");
+                                    gender = object.getString("gender");
+                                    String profile_name = object.getString("name");
+                                    long fb_id = object.getLong("id"); //use this for logout
+                                    //Start new activity or use this info in your project.
+                                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                                    i.putExtra("type", "facebook");
+                                    i.putExtra("facebook_id", facebook_id);
+                                    i.putExtra("f_name", f_name);
+                                    i.putExtra("m_name", m_name);
+                                    i.putExtra("l_name", l_name);
+                                    i.putExtra("full_name", full_name);
+                                    i.putExtra("profile_image", profile_image);
+                                    i.putExtra("email_id", email_id);
+                                    i.putExtra("gender", gender);
+                                    Log.e("LoginActivity","---->facebook true()");
+//                                    progress.dismiss();
+//                                    startActivity(i);
+//                                    finish();
+                                    Toast.makeText(LoginActivity.this, "facebook true", Toast.LENGTH_LONG).show();
+                                } catch (JSONException e) {
+                                    // TODO Auto-generated catch block
+                                    Log.e("LoginActivity","-------Errore--->"+e.getMessage());
+                                      e.printStackTrace();
+                                }
+
+                            }
+
+                        });
+
+                request.executeAsync();
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.e("LoginActivity","-------Errore--->"+error.getMessage());
+                error.printStackTrace();
+
+            }
+
+            @Override
+            public void onCancel() {
+
             }
         });
     }
@@ -119,7 +217,7 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else { ///Login Processes validation is true
 
-            loginPresenter.sendLoginRequest(mEmailView.getText().toString(), mPasswordView.getText().toString());
+//            loginPresenter.sendLoginRequest(mEmailView.getText().toString(), mPasswordView.getText().toString());
 
         }
     }

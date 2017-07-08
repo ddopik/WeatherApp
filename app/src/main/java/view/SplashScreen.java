@@ -1,4 +1,4 @@
-package View;
+package view;
 
 /**
  * Created by ddopi on 6/15/2017.

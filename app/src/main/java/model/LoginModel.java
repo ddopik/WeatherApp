@@ -1,11 +1,11 @@
-package Model;
+package model;
 
 
 
 import java.util.HashMap;
 
-import Model.Tables.User;
-import Presenter.AppConfig.MainApp;
+import model.tables.User;
+import presenter.app_config.MainApp;
 
 /**
  * Created by ddopi on 5/30/2017.
