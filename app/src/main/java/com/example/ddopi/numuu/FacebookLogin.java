@@ -70,85 +70,26 @@ public class FacebookLogin extends AppCompatActivity {
         progress.setCancelable(false);
 
         facebook_id=f_name= m_name= l_name= gender= profile_image= full_name= email_id="";
-
         //for facebook
-//        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-
-        //register callback object for facebook result
-//        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                progress.show();
-//                Profile profile = Profile.getCurrentProfile();
-//                if (profile != null) {
-//                    facebook_id=profile.getId();
-//                    f_name=profile.getFirstName();
-//                    m_name=profile.getMiddleName();
-//                    l_name=profile.getLastName();
-//                    full_name=profile.getName();
-//                    profile_image=profile.getProfilePictureUri(400, 400).toString();
-//                }
-//                //Toast.makeText(FacebookLogin.this,"Wait...",Toast.LENGTH_SHORT).show();
-//                GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(),
-//                        new GraphRequest.GraphJSONObjectCallback() {
-//                            @Override
-//                            public void onCompleted(JSONObject object, GraphResponse response) {
-//                                try {
-//                                    Log.e("json is ",object.toString());
-//                                    Log.e("response is ",response.toString());
-//                                    AccessToken c=AccessToken.getCurrentAccessToken();
-//                                    email_id=object.getString("email");
-//                                    gender=object.getString("gender");
-//                                    String profile_name=object.getString("name");
-//                                    long fb_id=object.getLong("id"); //use this for logout
-//                                    //Start new activity or use this info in your project.
-//                                    Intent i=new Intent(FacebookLogin.this, MainActivity.class);
-//                                    i.putExtra("type","facebook");
-//                                    i.putExtra("facebook_id",facebook_id);
-//                                    i.putExtra("f_name",f_name);
-//                                    i.putExtra("m_name",m_name);
-//                                    i.putExtra("l_name",l_name);
-//                                    i.putExtra("full_name",full_name);
-//                                    i.putExtra("profile_image",profile_image);
-//                                    i.putExtra("email_id",email_id);
-//                                    i.putExtra("gender",gender);
-//
-//                                    progress.dismiss();
-//                                    startActivity(i);
-//                                    finish();
-//                                } catch (JSONException e) {
-//                                    // TODO Auto-generated catch block
-//                                    Log.e("FacebookLogin","error  "+e.getMessage());
-//                                    progress.dismiss();
-//                                }
-//
-//                            }
-//
-//                        });
-//
-//                request.executeAsync();
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//                Toast.makeText(FacebookLogin.this,getResources().getString(R.string.login_canceled_facebooklogin), Toast.LENGTH_SHORT).show();
-//                progress.dismiss();
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//                Toast.makeText(FacebookLogin.this,getResources().getString(R.string.login_failed_facebooklogin),Toast.LENGTH_SHORT).show();
-//                Log.e("FaceBook Login","error"+error.getMessage());
-//                progress.dismiss();
-//            }
-//        });
-
         // Callback registration
-        facebook_button.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//        facebook_button.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
+
+                progress.show();
+                Profile profile = Profile.getCurrentProfile();
+                if (profile != null) {
+                    facebook_id=profile.getId();
+                    f_name=profile.getFirstName();
+                    m_name=profile.getMiddleName();
+                    l_name=profile.getLastName();
+                    full_name=profile.getName();
+                    profile_image=profile.getProfilePictureUri(400, 400).toString();
+                }
+
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -162,10 +103,32 @@ public class FacebookLogin extends AppCompatActivity {
                                     Log.e("response is ",response.toString());
                                     String email = object.getString("email");
                                     String birthday = object.getString("birthday"); // 01/31/1980 format
+                                    Log.e("json is ",object.toString());
+                                    Log.e("response is ",response.toString());
+                                    AccessToken c=AccessToken.getCurrentAccessToken();
+                                    email_id=object.getString("email");
+                                    gender=object.getString("gender");
+                                    String profile_name=object.getString("name");
+                                    long fb_id=object.getLong("id"); //use this for logout
+//                                    Start new activity or use this info in your project.
+                                    Intent i=new Intent(FacebookLogin.this, MainActivity.class);
+                                    i.putExtra("type","facebook");
+                                    i.putExtra("facebook_id",facebook_id);
+                                    i.putExtra("f_name",f_name);
+                                    i.putExtra("m_name",m_name);
+                                    i.putExtra("l_name",l_name);
+                                    i.putExtra("full_name",full_name);
+                                    i.putExtra("profile_image",profile_image);
+                                    i.putExtra("email_id",email_id);
+                                    i.putExtra("gender",gender);
+                                    progress.dismiss();
+                                    startActivity(i);
+//                                    finish();
 
                                 }catch (Exception e)
                                 {
                                     Log.e("FaceBook Login","error"+e.getMessage());
+                                    progress.dismiss();
                                 }
 
                             }
@@ -178,16 +141,17 @@ public class FacebookLogin extends AppCompatActivity {
 
             }
 
-            @Override
+                        @Override
             public void onCancel() {
-                // App code
-                Log.v("LoginActivity", "cancel");
+                Toast.makeText(FacebookLogin.this,getResources().getString(R.string.login_canceled_facebooklogin), Toast.LENGTH_SHORT).show();
+                progress.dismiss();
             }
 
             @Override
-            public void onError(FacebookException exception) {
-                // App code
-                Log.v("LoginActivity", exception.getCause().toString());
+            public void onError(FacebookException error) {
+                Toast.makeText(FacebookLogin.this,getResources().getString(R.string.login_failed_facebooklogin),Toast.LENGTH_SHORT).show();
+                Log.e("FaceBook Login","error"+error.getMessage());
+                progress.dismiss();
             }
         });
 

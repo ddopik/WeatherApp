@@ -14,7 +14,37 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/connectWithFbButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="30dp"
+                    android:visibility="gone"
+                    android:layout_marginTop="30dp" />
+
+                <ImageButton
+                    android:id="@+id/logout_button"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:visibility="visible"
+                    android:layout_marginRight="18dp"
+                    android:src="@drawable/logout_button"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="18dp" />
+
+            </RelativeLayout>
+
+
+       </android.support.v7.widget.Toolbar >
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
@@ -29,4 +59,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"  />
+
 </android.support.design.widget.CoordinatorLayout>

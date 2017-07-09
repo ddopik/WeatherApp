@@ -54,11 +54,11 @@ public void sendLoginRequest(String loginUserName, String loginPassWord)
            jsonObjectobj=jsonObjectobjRecived;
 
             try{
-                if(jsonObjectobj.get("status").equals("true")) {
+                if(jsonObjectobj.get("success").equals("ok")) {
                     Log.e("LoginPresenter", "sendLoginRequest CallBack" + jsonObjectobj.toString());
                     HashMap<String, String> map = jsonObjFetcher.fetchLoginObj(jsonObjectobj);
-                    loginModel.setUser(map); ////save user locally
-                    Toast.makeText(activityContext,"Welcome " +map.get("username"), Toast.LENGTH_SHORT).show();
+//                    loginModel.setUser(map); ////save user locally
+                    Toast.makeText(activityContext,"Welcome " +map.get("UserName"), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(activityContext, MainActivity.class);
                     activityContext.startActivity(intent);
                     loginActivity.showProgress(false);
@@ -68,13 +68,16 @@ public void sendLoginRequest(String loginUserName, String loginPassWord)
                     loginActivity.showProgress(false);
                     Toast.makeText(activityContext,"please check your data and try again", Toast.LENGTH_LONG).show();
 
+
                 }
             }
             catch (Exception e)
             {
                 e.printStackTrace();
+                Log.e("LoginPresenter","error fetching"+e.getMessage());
                 loginActivity.showProgress(false);
                 Toast.makeText(activityContext,"please check your data and try again", Toast.LENGTH_LONG).show();
+
 
 
             }

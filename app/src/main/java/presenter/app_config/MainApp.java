@@ -33,7 +33,8 @@ public class MainApp extends Application {
     public static Realm realm;
     public static final String SittingActivity_sharedPreferance = "MyPrefsFile";
 
-    public static final String loginUrl="http://nomw.code-court.com/index/login/" ;
+//    public static final String loginUrl="http://nomw.code-court.com/index/login/" ;
+    public static final String loginUrl="http://www.smartpan.com.sa:5551/AndriodAPI/login" ;
     public static final String cources_url="http://nomw.code-court.com/index/courses";
     public static final String trainers_url="http://nomw.code-court.com/index/courses";
     public static final String unActiveCources_flag="0";

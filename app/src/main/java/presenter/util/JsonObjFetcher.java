@@ -20,14 +20,12 @@ public class JsonObjFetcher {
         JSONObject obj;
         HashMap<String, String> map ;
         try {
-             obj = (JSONObject) mobj.get("status_msg");
+//             obj = (JSONObject) mobj.get("status_msg");
              map = new HashMap<String, String>();
 
-            map.put("user_id", obj.get("user_id").toString());
-            map.put("username", obj.get("username").toString());
-            map.put("email", obj.get("email").toString());
-            map.put("user_pass", obj.get("user_pass").toString());
-            map.put("user_role", obj.get("user_role").toString());
+            map.put("user_id", mobj.get("Id").toString());
+            map.put("success", mobj.get("success").toString());
+            map.put("UserName", mobj.get("UserName").toString());
             return map;
         }catch (Exception e)
         {

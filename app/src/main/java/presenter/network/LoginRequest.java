@@ -39,8 +39,8 @@ public class LoginRequest {
     }
 
     public JSONObject sentRequest(final String userName, final String passWord, LoginPresenter.LoginPresenterRequest loginCallBackRequest) {
-
-            this.loginUrl = MainApp.loginUrl+ userName + "/" + passWord;
+        http://www.smartpan.com.sa:5551/AndriodAPI/login?username=asd&password=123
+            this.loginUrl = MainApp.loginUrl+"?username="+userName+"&password="+passWord;
             this.loginUrl.replaceAll("\\s+", ""); ///remove unnessasary spaces
             requestQueue = Volley.newRequestQueue(activityContext);
             loginPresenterRequest=loginCallBackRequest;
@@ -54,7 +54,7 @@ public class LoginRequest {
                         mJsonObj = new JSONObject(response);
                         loginPresenterRequest.jsonRequest(mJsonObj);
                         Log.e(TAG, "Json converted----------->" + mJsonObj.toString());
-                        Log.e(TAG, "Json status----------->" + mJsonObj.get("status").toString());
+                        Log.e(TAG, "Json status----------->" + mJsonObj.get("success").toString());
 
                     } catch (Exception e) {
                         Log.e(TAG, "Error---->: \"" + e.toString()+ "\"");
@@ -72,20 +72,6 @@ public class LoginRequest {
                     Log.e("VOLLEY", "error with" + error.toString());
                 }
             }) {
-//                @Override
-//                public String getBodyContentType() {
-//                    return "application/json; charset=utf-8";
-//                }
-
-//                @Override
-//                public byte[] getBody() throws AuthFailureError {
-//                    try {
-//                        return requestBody == null ? null : requestBody.getBytes("utf-8");
-//                    } catch (UnsupportedEncodingException uee) {
-//                        VolleyLog.e("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
-//                        return null;
-//                    }
-//                }
 
             };
             requestQueue.add(stringRequest);
