@@ -1,0 +1,110 @@
+package presenter;
+
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import model.LoginModel;
+import presenter.network.LoginRequest;
+import presenter.network.SignUpRequsest;
+import presenter.util.JsonObjFetcher;
+import view.LoginActivity;
+import view.MainActivity;
+import view.SignUpActivity;
+
+/**
+ * Created by ddopi on 7/9/2017.
+ */
+
+public class SignUpPresenter {
+
+
+
+    private Context activityContext;
+    private SignUpActivity signUpActivity;
+    private SignUpRequsest signUpRequsest;
+    private String url = "http://nomw.code-court.com/index/loginn/tobe/3162696a";
+    private HashMap loginHashMap;
+    private String userName;
+    private String passWord;
+    private JSONObject jsonObjectobj;
+    private SignUpPresenter.SignUPresenterRequest signUpPresenterRequest;
+    private JsonObjFetcher jsonObjFetcher=new JsonObjFetcher();
+    private LoginModel loginModel=new LoginModel();
+
+    public SignUpPresenter(Context context)
+    {
+        activityContext=context;
+        signUpRequsest =new SignUpRequsest(context);
+        signUpActivity=(SignUpActivity)activityContext;
+    }
+
+    public void sendSignUpRequest(Map<String,String> signUpFormMap)
+    {
+
+
+        signUpPresenterRequest=new SignUpPresenter.SignUPresenterRequest(){
+            @Override
+            public void jsonRequest(JSONObject jsonObjectobjRecived) {
+                jsonObjectobj=jsonObjectobjRecived;
+
+                try{
+//                    if(jsonObjectobj.get("success").equals("ok")) {
+                    if(!jsonObjectobj.equals(null)) {
+                        Log.e("LoginPresenter", "sendSignUpRequest CallBack" + jsonObjectobj.toString());
+//                        HashMap<String, String> map = jsonObjFetcher.fetchLoginObj(jsonObjectobj);
+//                    loginModel.setUser(map); ////save user locally
+                        Toast.makeText(activityContext,"True ", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(activityContext, LoginActivity.class);
+                        activityContext.startActivity(intent);
+
+                    }
+                    else
+                    {
+
+                        Toast.makeText(activityContext,"please check your data and try again", Toast.LENGTH_LONG).show();
+
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    Log.e("LoginPresenter","error fetching"+e.getMessage());
+
+                    Toast.makeText(activityContext,"please check your data and try again", Toast.LENGTH_LONG).show();
+
+
+
+                }
+
+            }
+        };
+        signUpRequsest.sentRequest(signUpFormMap,signUpPresenterRequest);
+    }
+    public HashMap getLoginHashMap()
+    {
+        loginHashMap=new HashMap<String,String>();
+        loginHashMap.put("user_id","1");
+        loginHashMap.put("user_name","franky");
+        loginHashMap.put("user_password","123456");
+
+        return loginHashMap;
+
+    }
+
+
+    /**
+     * Created by ddopi on 5/30/2017.
+     */
+
+    public static interface SignUPresenterRequest {
+        public void jsonRequest(JSONObject jsonObjectobj);
+    }
+}

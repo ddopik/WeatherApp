@@ -74,6 +74,8 @@ public class LoginActivity extends AppCompatActivity {
     public View mProgressView;
     @BindView(R.id.login_form)
     public View mLoginFormView;
+    @BindView(R.id.sign_up)
+    TextView sign_up;
     LoginPresenter loginPresenter;
 
     @Override
@@ -217,6 +219,12 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, "Please check your internet Connection", Toast.LENGTH_LONG).show();
         }
+    }
+
+    @OnClick(R.id.sign_up)
+    public void launchSignUp() {
+        Intent i = new Intent(LoginActivity.this, SignUpActivity.class);
+        startActivity(i);
     }
 
     /**

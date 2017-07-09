@@ -55,7 +55,7 @@ public void sendLoginRequest(String loginUserName, String loginPassWord)
 
             try{
                 if(jsonObjectobj.get("success").equals("ok")) {
-                    Log.e("LoginPresenter", "sendLoginRequest CallBack" + jsonObjectobj.toString());
+                    Log.e("LoginPresenter", "sendSignUpRequest CallBack" + jsonObjectobj.toString());
                     HashMap<String, String> map = jsonObjFetcher.fetchLoginObj(jsonObjectobj);
 //                    loginModel.setUser(map); ////save user locally
                     Toast.makeText(activityContext,"Welcome " +map.get("UserName"), Toast.LENGTH_SHORT).show();
