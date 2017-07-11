@@ -91,15 +91,15 @@ public class LoginPresenter extends Url_JsonRequest {
         return super.sentRequest();
     }
 
-    public HashMap getLoginHashMap() {
-        loginHashMap = new HashMap<String, String>();
-        loginHashMap.put("user_id", "1");
-        loginHashMap.put("user_name", "franky");
-        loginHashMap.put("user_password", "123456");
-
-        return loginHashMap;
-
-    }
+//    public HashMap getLoginHashMap() {
+//        loginHashMap = new HashMap<String, String>();
+//        loginHashMap.put("user_id", "1");
+//        loginHashMap.put("user_name", "franky");
+//        loginHashMap.put("user_password", "123456");
+//
+//        return loginHashMap;
+//
+//    }
 
 
 }

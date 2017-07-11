@@ -251,6 +251,7 @@ public class LoginActivity extends AppCompatActivity {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
+            showProgress(false);
         }
 
         // Check for a valid email address.
@@ -258,16 +259,19 @@ public class LoginActivity extends AppCompatActivity {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
             cancel = true;
+            showProgress(false);
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
             cancel = true;
+            showProgress(false);
         }
-        showProgress(false);
+//        showProgress(false);
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
             focusView.requestFocus();
+            showProgress(false);
         } else { ///Login Processes validation is true
 
             loginPresenter = new LoginPresenter(this,mEmailView.getText().toString(), mPasswordView.getText().toString());
@@ -291,7 +295,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
-        Log.e("LoginActivity", "#####Calling");
+        Log.e("LoginActivity", "inProgress");
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
