@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new OneFragment(), "ONE");
         adapter.addFragment(new TwoFragment(), "TWO");
-        adapter.addFragment(new ThreeFragment(), "THREE");
+        adapter.addFragment(new ThreeFragment(), "Contacts");
 //        adapter.addFragment(new FourFragment(), "Four");
 //        adapter.addFragment(new FiveFragment(), "Five");
         viewPager.setAdapter(adapter);

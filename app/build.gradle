@@ -63,5 +63,8 @@ dependencies {
     compile 'com.android.support:support-v4:25.3.0'
     testCompile 'junit:junit:4.12'
     provided 'javax.annotation:jsr250-api:1.0'
+
+    compile project(":AssestLib-module")
+
     testCompile 'junit:junit:4.12'
 }

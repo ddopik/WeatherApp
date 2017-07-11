@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
-        signUpPresenter=new SignUpPresenter(this);
+
 
 
     }
@@ -67,8 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
             else {
                 signUpHashMap.put("gender", "false");
             }
-
-            signUpPresenter.sendSignUpRequest(signUpHashMap);
+            signUpPresenter=new SignUpPresenter(this,signUpHashMap);
         } else {
             Toast.makeText(this, "Errror---", Toast.LENGTH_SHORT).show();
         }

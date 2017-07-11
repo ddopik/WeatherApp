@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-        loginPresenter = new LoginPresenter(this);
+
         Log.e("LoginActivity", "---->OnCreate()");
 /////////////////////////////////
         try {
@@ -270,8 +270,8 @@ public class LoginActivity extends AppCompatActivity {
             focusView.requestFocus();
         } else { ///Login Processes validation is true
 
-            loginPresenter.sendLoginRequest(mEmailView.getText().toString(), mPasswordView.getText().toString());
-
+            loginPresenter = new LoginPresenter(this,mEmailView.getText().toString(), mPasswordView.getText().toString());
+            loginPresenter.sentRequest();
         }
     }
 
