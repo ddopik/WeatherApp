@@ -111,7 +111,6 @@ public abstract  class FaceBookLoginFragment extends android.support.v4.app.Frag
 
 
                                     Intent i = new Intent(getActivity(),getHomeActivityName());
-//                                    Intent i = new Intent(getActivity(),Class.forName(getHomeActivityName()));
                                     i.putExtra("type", "facebook");
                                     i.putExtra("facebook_id", facebook_id);
                                     i.putExtra("f_name", f_name);

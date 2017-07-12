@@ -12,12 +12,63 @@ dependencies {
     compile 'com.github.smart-fun:XmlToJson:1.3.5'    // add this line
 }
 
-
-
-2-   for butterknif :-
-
+====================================================================================================
+2-for butterknif :-
+=========================
  ----->   this added to add inside project gradle
           dependencies {
                classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
           }
  ----->  this added to the top of App gradle apply plugin: 'com.jakewharton.butterknife'
+
+
+====================================================================================================
+ 3-for faceBood Sdk :-
+=====================
+ 1---Add the Maven Central Repository to build.gradle before dependencies:
+ repositories {
+     mavenCentral()
+ }
+
+ 2--Add compile 'com.facebook.android:facebook-android-sdk:[4,5)' to your build.gradle dependencies:
+    dependencies {
+      compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+3---import com.facebook.FacebookSdk;                   but it has already imported in this module
+    import com.facebook.appevents.AppEventsLogger;
+
+
+4--Add a new string with the name facebook_app_id containing the value of your Facebook App ID, and a new string for the protocol for Chrome Custom Tabs:
+   <string name="facebook_app_id">983562145119971</string>            this values are exampled
+   <string name="fb_login_protocol_scheme">fb983562145119971</string>
+
+5---<uses-permission android:name="android.permission.INTERNET"/> in android Mainufest
+
+
+6--
+Add a meta-data element, an activity for Facebook, and an activity and intent filter for Chrome Custom Tabs to the application element:
+<application android:label="@string/app_name" ...>;
+    ...
+    <meta-data android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/facebook_app_id"/>   ----->this id provided from Facebook App Client console
+    ...
+    <activity android:name="com.facebook.FacebookActivity"
+        android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        android:label="@string/app_name" />
+    <activity
+        android:name="com.facebook.CustomTabActivity"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="@string/fb_login_protocol_scheme" />
+        </intent-filter>
+    </activity>
+</application>
+
+6. Provide the Development and Release Key Hashes for Your App
+    copy the hash key from console and past it in facebook console client
+   this step are exampled here https://developers.facebook.com/docs/facebook-login/android
+====================================================================================================

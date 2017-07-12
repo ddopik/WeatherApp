@@ -36,7 +36,6 @@ public class LoginPresenter extends Url_JsonRequest {
     private LoginActivity loginActivity;
     private PresenterRequest presenterRequest;
 //    private String url = "http://nomw.code-court.com/index/loginn/tobe/3162696a";
-    private HashMap loginHashMap;
     private String userName;
     private String passWord;
     private JSONObject jsonObjectobj;
