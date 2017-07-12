@@ -76,7 +76,7 @@ public class LoginPresenter extends Url_JsonRequest {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("LoginPresenter", "error fetching" + e.getMessage());
+                    Log.e("LoginPresenter", "error fetching  --->" + e.getMessage());
                     loginActivity.showProgress(false);
                     Toast.makeText(activityContext, "please check your data and try again", Toast.LENGTH_LONG).show();
                 }
@@ -87,8 +87,8 @@ public class LoginPresenter extends Url_JsonRequest {
     }
 
     @Override
-    public JSONObject sentRequest() {
-        return super.sentRequest();
+    public void sentRequest(boolean casheState) {
+         super.sentRequest(false);
     }
 
 //    public HashMap getLoginHashMap() {

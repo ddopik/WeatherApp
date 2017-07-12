@@ -275,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
         } else { ///Login Processes validation is true
 
             loginPresenter = new LoginPresenter(this,mEmailView.getText().toString(), mPasswordView.getText().toString());
-            loginPresenter.sentRequest();
+            loginPresenter.sentRequest(false);
         }
     }
 

@@ -1,0 +1,17 @@
+this line is requred to configure AssesrLi-Module without error
+
+1-Add the libary dependency to your APP build.gradle file (XML to jason lib)
+
+dependencies {
+    compile 'com.github.smart-fun:XmlToJson:1.3.5'    // add this line
+}
+
+
+
+2-   for butterknif :-
+
+ ----->   this added to add inside project gradle
+          dependencies {
+               classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
+          }
+ ----->  this added to the top of App gradle apply plugin: 'com.jakewharton.butterknife'

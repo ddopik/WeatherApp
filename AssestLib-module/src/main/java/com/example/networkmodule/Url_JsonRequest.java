@@ -3,6 +3,7 @@ package com.example.networkmodule;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.Cache;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,16 +15,19 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
+
+import fr.arnaudguyon.xmltojsonlib.XmlToJson;
 
 import static com.android.volley.VolleyLog.TAG;
 
 /**
  * Created by ddopi on 7/10/2017.
- *
- *   if you parent need field to be intialized before abstract method in the child being impleented
- *   call parent constructur with super(required fiels,required fiels,required fiels);
- *   1---case when parent constructor calling abstract method  through it's constructor
+ * <p>
+ * if you parent need field to be intialized before abstract method in the child being impleented
+ * call parent constructur with super(required fiels,required fiels,required fiels);
+ * 1---case when parent constructor calling abstract method  through it's constructor
  */
 
 public abstract class Url_JsonRequest {
@@ -35,32 +39,80 @@ public abstract class Url_JsonRequest {
     private Response.Listener<JSONObject> listener;
     private Map<String, String> params;
     private PresenterRequest presenterRequest;
-    private   String loginUrl;
-
-    public abstract String getUrl();
-    public abstract PresenterRequest getPresenterRequest();
+    private String requsetUrl;
 
     public Url_JsonRequest(Context context) {
         activityContext = context;
     }
-    public JSONObject sentRequest() {
+
+    public abstract String getUrl();
+
+    public abstract PresenterRequest getPresenterRequest();
+
+    public RequestQueue getRequestQueue() {
+        return requestQueue = Volley.newRequestQueue(activityContext);
+    }
 
 
-        loginUrl=this.getUrl().replaceAll("\\s+", ""); ///remove unnessasary spaces
-        requestQueue = Volley.newRequestQueue(activityContext);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, loginUrl, new Response.Listener<String>() {
+    public void sentRequest(boolean casheRequest) {
+
+        requsetUrl = this.getUrl().replaceAll("\\s+", ""); ///remove unnessasary spaces
+
+
+
+        if(casheRequest==true && casheRequset(requsetUrl) !=null) {
+            getPresenterRequest().jsonRequest(casheRequset(requsetUrl));
+        }else
+        {
+            lifeRequest(getPresenterRequest(), requsetUrl);
+        }
+    }
+
+
+    private JSONObject casheRequset(String url)
+    {
+        Cache cache = getRequestQueue().getCache();
+        Cache.Entry entry = cache.get(url);
+        JSONObject obj=new JSONObject();
+        if (entry != null) {
+            try {
+                String data = new String(entry.data, "UTF-8");
+                try {
+                    XmlToJson xmlToJson = new XmlToJson.Builder(data).build();
+                    obj=new JSONObject(xmlToJson.toString());
+                    Log.e("NewsNetWorkController","Cashe Returned = "+xmlToJson.toString());
+                } catch (Exception e) {
+                    Log.e("NewsNetWorkController", "No Cashe Found" + e.getMessage());
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                Log.e("NewsNetWorkController", "Cashe Error---->" + e.getMessage());
+            }
+
+        }
+        return obj;
+    }
+
+
+    public void lifeRequest(PresenterRequest presenterRequest,final String mLoginUrl)
+    {
+        requestQueue = getRequestQueue();
+        final PresenterRequest rPresenterRequest=presenterRequest;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,mLoginUrl, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    mJsonObj = new JSONObject(response);
-                    getPresenterRequest().jsonRequest(mJsonObj);
-                    Log.e(TAG, "Json converted----------->" + mJsonObj.toString());
-                    Log.e(TAG,"url is---->"+loginUrl);
+
+                    rPresenterRequest.jsonRequest(new JSONObject(response));  ///recived action from presenter
+                    Log.e(TAG, "Json converted----------->" + new JSONObject(response).toString());
+                    Log.e(TAG, "url is---->" + mLoginUrl);
+
                 } catch (Exception e) {
-                    Log.e(TAG, "Error---->: \"" + e.toString()+ "\"");
+                    Log.e(TAG, "Error---->: \"" + e.toString() + "\"");
                     Log.e(TAG, "Could not parse Returned JSON as Response---->: \"" + response + "\"");
-                    Log.e(TAG,"url is---->"+loginUrl);
-                    getPresenterRequest().jsonRequest(null);
+                    Log.e(TAG, "url is---->" + mLoginUrl);
+                    rPresenterRequest.jsonRequest(null);  ///recived action from presenter
                 }
             }
 
@@ -79,11 +131,11 @@ public abstract class Url_JsonRequest {
 
         stringRequest.setRetryPolicy(policy); //configure retry policy. Give a large timeout and try,--->avoide timeOut exception
         requestQueue.add(stringRequest);
-        return mJsonObj;
+
+
     }
 
-
-    public  interface PresenterRequest {
+    public interface PresenterRequest {
         //// implement this interFace an handle recived obj from Request
         public void jsonRequest(JSONObject jsonObjectobj);
     }

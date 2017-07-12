@@ -48,12 +48,10 @@ public class PhoneContactList extends  android.support.v4.app.Fragment  {
     ListView listView;
     // Cursor to load contacts list
     Cursor phones, email;
-
     // Pop up
     ContentResolver resolver;
     SearchView search;
     UserContactAdapter adapter;
-
     private View mainView;
 
     @Override
@@ -65,7 +63,6 @@ public class PhoneContactList extends  android.support.v4.app.Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         mainView=inflater.inflate(R.layout.phone_contact_activity, container, false);
         selectUsers = new ArrayList<UserViewHolder>();
         resolver = getActivity().getContentResolver();
