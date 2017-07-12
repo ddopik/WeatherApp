@@ -1,4 +1,4 @@
-package com.example.networkmodule;
+package com.example.networkmodule.simpleJsonRequest;
 
 import android.content.Context;
 import android.util.Log;
@@ -34,11 +34,7 @@ public abstract class Url_JsonRequest {
 
 
     private RequestQueue requestQueue;
-    Context activityContext;
-    private JSONObject mJsonObj;
-    private Response.Listener<JSONObject> listener;
-    private Map<String, String> params;
-    private PresenterRequest presenterRequest;
+    private Context activityContext;
     private String requsetUrl;
 
     public Url_JsonRequest(Context context) {

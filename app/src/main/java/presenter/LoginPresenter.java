@@ -6,7 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import com.example.networkmodule.Url_JsonRequest;
+import com.example.networkmodule.simpleJsonRequest.Url_JsonRequest;
 
 import org.json.JSONObject;
 

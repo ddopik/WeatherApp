@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.networkmodule.Url_JsonRequest;
+import com.example.networkmodule.simpleJsonRequest.Url_JsonRequest;
 
 import org.json.JSONObject;
 
@@ -47,6 +47,11 @@ public class SignUpPresenter extends Url_JsonRequest {
     public String getUrl() {
         return MainApp.loginUrl + "?name=" + signUpFormMap.get("name") + "&username=" + signUpFormMap.get("username") + "&password=" + signUpFormMap.get("input_password") + "&mail=" + signUpFormMap.get("input_email") + "&gender=" + signUpFormMap.get("gender") + "&mobile=" + signUpFormMap.get("mobile") + "";
 
+    }
+
+    @Override
+    public void sentRequest(boolean casheRequest) {
+        super.sentRequest(false);
     }
 
     @Override

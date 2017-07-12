@@ -1,4 +1,10 @@
 this line is requred to configure AssesrLi-Module without error
+===================================================================
+
+first of all add this line
+//---> in app.gradle    compile project(":AssestLib-module") in dependencies {}_array
+//---> setting.gradle    include ':app',':AssestLib-module'
+
 
 1-Add the libary dependency to your APP build.gradle file (XML to jason lib)
 

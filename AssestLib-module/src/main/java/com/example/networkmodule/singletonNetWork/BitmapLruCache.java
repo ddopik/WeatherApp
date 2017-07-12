@@ -1,4 +1,4 @@
-package com.example.networkmodule;
+package com.example.networkmodule.singletonNetWork;
 
 import android.graphics.Bitmap;
 import android.util.LruCache;

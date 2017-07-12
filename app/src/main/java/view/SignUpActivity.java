@@ -67,7 +67,9 @@ public class SignUpActivity extends AppCompatActivity {
             else {
                 signUpHashMap.put("gender", "false");
             }
+
             signUpPresenter=new SignUpPresenter(this,signUpHashMap);
+            signUpPresenter.sentRequest(false);
         } else {
             Toast.makeText(this, "Errror---", Toast.LENGTH_SHORT).show();
         }
