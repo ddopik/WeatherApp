@@ -55,12 +55,12 @@ public class LoginActivity extends AppCompatActivity {
 
 
     //    /For facebook
-    private CallbackManager callbackManager;
+//    private CallbackManager callbackManager;
 
-    @BindView(R.id.connectWithFbButton)
-    public LoginButton facebook_button;
-    ProgressDialog progress;
-    private String facebook_id, f_name, m_name, l_name, gender, profile_image, full_name, email_id;
+//    @BindView(R.id.connectWithFbButton)
+//    public LoginButton facebook_button;
+//    ProgressDialog progress;
+//    private String facebook_id, f_name, m_name, l_name, gender, profile_image, full_name, email_id;
 
 
     // UI references.
@@ -81,8 +81,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+//        AppEventsLogger.activateApp(this);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
@@ -93,111 +93,16 @@ public class LoginActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
 
         }
-        facebook_button = (LoginButton) findViewById(R.id.connectWithFbButton);
-        progress = new ProgressDialog(LoginActivity.this);
-        progress.setMessage(getResources().getString(R.string.please_wait_facebooklogin));
-        progress.setIndeterminate(false);
-        progress.setCancelable(false);
-
-        facebook_id = f_name = m_name = l_name = gender = profile_image = full_name = email_id = "";
-        //for facebook
-        callbackManager = CallbackManager.Factory.create();
-        // Callback registration
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-
-                progress.show();
-//                Profile profile = Profile.getCurrentProfile();
-//                if (profile != null) {
-//                    facebook_id=profile.getId();
-//                    f_name=profile.getFirstName();
-//                    m_name=profile.getMiddleName();
-//                    l_name=profile.getLastName();
-//                    full_name=profile.getName();
-//                    profile_image=profile.getProfilePictureUri(400, 400).toString();
-//                }
-
-                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                    @Override
-                    public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.v("LoginActivity", response.toString());
-
-//                                logoutFromFacebook();
-                        try {
-                            Log.e("json is ", object.toString());
-                            Log.e("response is ", response.toString());
-                            String email = object.getString("email");
-                            String birthday = object.getString("birthday"); // 01/31/1980 format
-
-                            email_id = object.getString("email");
-                            gender = object.getString("gender");
-                            String profile_name = object.getString("name");
-                            long fb_id = object.getLong("id"); //use this for logout
-//                                    Start new activity or use this info in your project.
 
 
-                            SharedPreferences.Editor editor = getSharedPreferences("task_shared_pref", MODE_PRIVATE).edit();
-                            editor.putLong("fb_id", fb_id);
-                            editor.apply();
+        Fb_FragmentButton singleNewsActivity = new Fb_FragmentButton();
+                    getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fb_switch_fragment, singleNewsActivity, null)
+                    .commit();
 
-
-                            Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                            i.putExtra("type", "facebook");
-                            i.putExtra("facebook_id", facebook_id);
-                            i.putExtra("f_name", f_name);
-                            i.putExtra("m_name", m_name);
-                            i.putExtra("l_name", l_name);
-                            i.putExtra("full_name", full_name);
-                            i.putExtra("profile_image", profile_image);
-                            i.putExtra("email_id", email_id);
-                            i.putExtra("gender", gender);
-                            progress.dismiss();
-                            startActivity(i);
-                            finish();
-
-                        } catch (Exception e) {
-                            Log.e("FaceBook Login", "error" + e.getMessage());
-                            progress.dismiss();
-                        }
-
-                    }
-                });
-                Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,gender,birthday");
-                request.setParameters(parameters);
-                request.executeAsync();
-
-
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(LoginActivity.this, getResources().getString(R.string.login_canceled_facebooklogin), Toast.LENGTH_SHORT).show();
-                progress.dismiss();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(LoginActivity.this, getResources().getString(R.string.login_failed_facebooklogin), Toast.LENGTH_SHORT).show();
-                Log.e("FaceBook Login", "error" + error.getMessage());
-                progress.dismiss();
-            }
-        });
-
-        //facebook button click
-        facebook_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends", "email"));
-            }
-        });
 /////////////////////////////////
 
-        // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-        mPasswordView = (EditText) findViewById(R.id.password);
+
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -213,9 +118,10 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.email_sign_in_button)
     public void startLogin() {
+        loginPresenter = new LoginPresenter(this,mEmailView.getText().toString(), mPasswordView.getText().toString());
         if (MainApp.isInternetAvailable()) {
-            showProgress(true);
-            attemptLogin();
+            loginPresenter.showProgress(true);
+            loginPresenter.attemptLogin();
         } else {
             Toast.makeText(this, "Please check your internet Connection", Toast.LENGTH_LONG).show();
         }
@@ -227,116 +133,97 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    /**
-     * Attempts to sign in or register the account specified by the login form.
-     * If there are form errors (invalid email, missing fields, etc.), the
-     * errors are presented and no actual login attempt is made.
-     */
-    private void attemptLogin() {
 
 
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-            showProgress(false);
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-            showProgress(false);
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-            showProgress(false);
-        }
-//        showProgress(false);
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-            showProgress(false);
-        } else { ///Login Processes validation is true
-
-            loginPresenter = new LoginPresenter(this,mEmailView.getText().toString(), mPasswordView.getText().toString());
-            loginPresenter.sentRequest(false);
-        }
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-//        return email.contains("@");
-        return true;
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 2;
-    }
-
-    /**
-     * Shows the progress UI and hides the login form.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    public void showProgress(final boolean show) {
-        Log.e("LoginActivity", "inProgress");
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-
-        }
-
-        ///////////////////////////////////////////
 
 
-    }
-
-    //for facebook callback result.
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
 
 }
 
+// facebook_button = (LoginButton) findViewById(R.id.connectWithFbButton);
+//         progress = new ProgressDialog(LoginActivity.this);
+//         progress.setMessage(getResources().getString(R.string.please_wait_facebooklogin));
+//         progress.setIndeterminate(false);
+//         progress.setCancelable(false);
+//
+//         facebook_id = f_name = m_name = l_name = gender = profile_image = full_name = email_id = "";
+//         //for facebook
+//         callbackManager = CallbackManager.Factory.create();
+//         // Callback registration
+//         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//@Override
+//public void onSuccess(LoginResult loginResult) {
+//        // App code
+//        progress.show();
+//        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+//@Override
+//public void onCompleted(JSONObject object, GraphResponse response) {
+//        Log.v("LoginActivity", response.toString());
+//        try {
+//        Log.e("json is ", object.toString());
+//        Log.e("response is ", response.toString());
+//        String email = object.getString("email");
+//        String birthday = object.getString("birthday"); // 01/31/1980 format
+//
+//        email_id = object.getString("email");
+//        gender = object.getString("gender");
+//        String profile_name = object.getString("name");
+//        long fb_id = object.getLong("id"); //use this for logout
+////                                    Start new activity or use this info in your project.
+//
+//
+//        SharedPreferences.Editor editor = getSharedPreferences("task_shared_pref", MODE_PRIVATE).edit();
+//        editor.putLong("fb_id", fb_id);
+//        editor.apply();
+//
+//
+//        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+//        i.putExtra("type", "facebook");
+//        i.putExtra("facebook_id", facebook_id);
+//        i.putExtra("f_name", f_name);
+//        i.putExtra("m_name", m_name);
+//        i.putExtra("l_name", l_name);
+//        i.putExtra("full_name", full_name);
+//        i.putExtra("profile_image", profile_image);
+//        i.putExtra("email_id", email_id);
+//        i.putExtra("gender", gender);
+//        progress.dismiss();
+//        startActivity(i);
+//        finish();
+//
+//        } catch (Exception e) {
+//        Log.e("FaceBook Login", "error" + e.getMessage());
+//        progress.dismiss();
+//        }
+//
+//        }
+//        });
+//        Bundle parameters = new Bundle();
+//        parameters.putString("fields", "id,name,email,gender,birthday");
+//        request.setParameters(parameters);
+//        request.executeAsync();
+//
+//
+//        }
+//
+//@Override
+//public void onCancel() {
+//        Toast.makeText(LoginActivity.this, getResources().getString(R.string.login_canceled_facebooklogin), Toast.LENGTH_SHORT).show();
+//        progress.dismiss();
+//        }
+//
+//@Override
+//public void onError(FacebookException error) {
+//        Toast.makeText(LoginActivity.this, getResources().getString(R.string.login_failed_facebooklogin), Toast.LENGTH_SHORT).show();
+//        Log.e("FaceBook Login", "error" + error.getMessage());
+//        progress.dismiss();
+//        }
+//        });
+//
+//        //facebook button click
+//        facebook_button.setOnClickListener(new View.OnClickListener() {
+//@Override
+//public void onClick(View v) {
+//        LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile", "user_friends", "email"));
+//        }
+//        });

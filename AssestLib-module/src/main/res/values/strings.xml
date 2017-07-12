@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">NetWorkModule</string>
+    <string name="please_wait_facebooklogin">Please Wait</string>
+    <string name="login_canceled_facebooklogin">FaceBook Login Canceled</string>
+    <string name="login_failed_facebooklogin">FaceBook Login Failed</string>
 </resources>

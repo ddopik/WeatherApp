@@ -36,4 +36,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.5.1'
     // XML to jason
     compile 'com.github.smart-fun:XmlToJson:1.2.0'    // add this line
+    ///FaceBook Sdk
+//    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
 }
