@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 
@@ -126,6 +127,8 @@ public class UserContactAdapter extends BaseAdapter {
     }
 
     // Filter Class
+    /// arraylist its a secondary array that hold  original  arrayList the adapter first initiated
+    /// _data it is the dynamic array need to be cleared ant initialized to notify the adapter
     public void filter(String charText) {
         charText = charText.toLowerCase(Locale.getDefault());
         _data.clear();
@@ -141,6 +144,27 @@ public class UserContactAdapter extends BaseAdapter {
         }
         notifyDataSetChanged();
     }
+//
+//    search = (SearchView) mainView.findViewById(R.id.searchView);
+//    //*** setOnQueryTextListener ***
+//        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//
+//        @Override
+//        public boolean onQueryTextSubmit(String query) {
+//            // TODO Auto-generated method stub
+//
+//            return false;
+//        }
+//
+//        @Override
+//        public boolean onQueryTextChange(String newText) {
+//            // TODO Auto-generated method stub
+//            adapter.filter(newText);
+//            return false;
+//        }
+//    });
+
+
     static class ViewHolder {
         ImageView imageView;
         TextView title, phone;

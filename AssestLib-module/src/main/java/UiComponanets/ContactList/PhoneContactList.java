@@ -85,7 +85,6 @@ public class PhoneContactList extends  android.support.v4.app.Fragment  {
 
 
         search = (SearchView) mainView.findViewById(R.id.searchView);
-
         //*** setOnQueryTextListener ***
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -183,7 +182,6 @@ public class PhoneContactList extends  android.support.v4.app.Fragment  {
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
                     Log.e("search", "here---------------- listener");
-
                     UserViewHolder data = selectUsers.get(i);
                 }
             });
