@@ -54,6 +54,8 @@ public class PhoneContactList extends  android.support.v4.app.Fragment  {
     UserContactAdapter adapter;
     private View mainView;
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
