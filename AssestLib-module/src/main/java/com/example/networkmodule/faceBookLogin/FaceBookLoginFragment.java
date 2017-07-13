@@ -169,7 +169,8 @@ public abstract  class FaceBookLoginFragment extends android.support.v4.app.Frag
         super.onDestroyView();
         unbinder.unbind();
     }
-    //for facebook callback result.  ?? what is this
+    //for facebook callback result.  this method calling the callback manger on current(Fragment/avtivity)
+    // and send current intent request
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
