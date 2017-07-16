@@ -37,14 +37,14 @@ public class JsonObjFetcher {
     public ArrayList<HashMap<String,String>> fetchCourcesObj(JSONObject jsonObject)
     {
         try {
-//            HashMap<String, String>  map = new HashMap<String, String>(); //Todo Under stand why this line override only first item
+
             HashMap<String, String>  map ;
 
             ArrayList<HashMap<String,String>> courceList=new ArrayList<HashMap<String,String>>();
             JSONArray courcesObj=jsonObject.getJSONArray("status_msg");
             for (int i=0;i<courcesObj.length();i++)
                   {
-//                      map = new HashMap<String, String>();  this line related with issues
+
 
                       map = new HashMap<String, String>();
                       map.put("id", courcesObj.getJSONObject(i).get("id").toString());
@@ -65,6 +65,50 @@ public class JsonObjFetcher {
 //                      map.put("cource_day_left", courcesObj.getJSONObject(i).get("cource_day_left").toString());
 
                       Log.e("JsonObjFetcher","fetchCourcesObj---->"+map.get("id"));
+                      courceList.add(i,map);
+            }
+
+            Log.e("JsonObjFetcher","fetchCourcesObj has fetched : "+courceList.size());
+            return courceList;
+        }catch (Exception e)
+        {
+            Log.e("JsonObjFetcher---->",e.getMessage());
+            Log.e("JsonObjFetcher","Error fetching Recived JSON obj");
+            return null;
+        }
+    }
+
+    public ArrayList<HashMap<String,String>> fetchWeatherObj(JSONObject jsonObject)
+    {
+        try {
+
+            HashMap<String, String>  map ;
+
+            ArrayList<HashMap<String,String>> courceList=new ArrayList<HashMap<String,String>>();
+            JSONArray weatherObj=jsonObject.getJSONArray("list");
+            for (int i=0;i<weatherObj.length();i++)
+                  {
+                      map = new HashMap<String, String>();
+                      map.put("weather_id", weatherObj.getJSONObject(i).get("id").toString());
+                      map.put("weather_name", weatherObj.getJSONObject(i).get("name").toString());
+                      map.put("Weather_lat", weatherObj.getJSONObject(i).getJSONObject("coord").get("Lat").toString());
+                      map.put("Weather_Lon", weatherObj.getJSONObject(i).getJSONObject("coord").get("Lon").toString());
+                      map.put("Weather_temp", weatherObj.getJSONObject(i).getJSONObject("main").get("temp").toString());
+                      map.put("Weather_temp_min", weatherObj.getJSONObject(i).getJSONObject("main").get("temp_min").toString());
+                      map.put("Weather_temp_max", weatherObj.getJSONObject(i).getJSONObject("main").get("temp_max").toString());
+                      map.put("Weather_pressure", weatherObj.getJSONObject(i).getJSONObject("main").get("pressure").toString());
+                      map.put("Weather_humidity", weatherObj.getJSONObject(i).getJSONObject("main").get("humidity").toString());
+                      map.put("Weather_speed", weatherObj.getJSONObject(i).getJSONObject("wind").get("speed").toString());
+                      map.put("Weather_deg", weatherObj.getJSONObject(i).getJSONObject("wind").get("deg").toString());
+                      map.put("Weather_main", weatherObj.getJSONObject(i).getJSONArray("weather").getJSONObject(0).get("main").toString());
+                      map.put("Weather_description", weatherObj.getJSONObject(i).getJSONArray("weather").getJSONObject(0).get("description").toString());
+
+
+                      Log.e("JsonObjFetcher","fetch_weather_Obj_id---->"+map.get("weather_id"));
+                      Log.e("JsonObjFetcher","fetch_weather_Obj_weather_name---->"+map.get("weather_name"));
+                      Log.e("JsonObjFetcher","fetch_weather_Obj_Weather_Lon---->"+map.get("Weather_Lon"));
+                      Log.e("JsonObjFetcher","fetch_weather_Obj_Weather_Lon---->"+map.get("Weather_lat"));
+                      Log.e("JsonObjFetcher","fetch_weather_Obj_Weather_temp---->"+map.get("Weather_temp"));
                       courceList.add(i,map);
             }
 

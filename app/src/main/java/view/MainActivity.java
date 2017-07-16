@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
-
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);

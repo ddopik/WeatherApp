@@ -33,20 +33,28 @@ public class MainApp extends Application {
     public static Realm realm;
     public static final String SittingActivity_sharedPreferance = "MyPrefsFile";
 
-//    public static final String loginUrl="http://nomw.code-court.com/index/login/" ;
-    public static final String loginUrl="http://www.smartpan.com.sa:5551/AndriodAPI/login" ;
-    public static final String cources_url="http://nomw.code-court.com/index/courses";
-    public static final String trainers_url="http://nomw.code-court.com/index/courses";
-    public static final String unActiveCources_flag="0";
-    public static final String activeCources_flag="1";
-    public static final String bestCources_flag="2";
-    public static final String offers_flag="3";
+    //    public static final String loginUrl="http://nomw.code-court.com/index/login/" ;
+    public static final String loginUrl = "http://www.smartpan.com.sa:5551/AndriodAPI/login";
+    public static final String cources_url = "http://nomw.code-court.com/index/courses";
+    public static final String trainers_url = "http://nomw.code-court.com/index/courses";
+    public static final String unActiveCources_flag = "0";
+    public static final String activeCources_flag = "1";
+    public static final String bestCources_flag = "2";
+    public static final String offers_flag = "3";
 
 
     @Override
     public void onCreate() {
         super.onCreate();
         this.app = this;
+//        Stetho.initializeWithDefaults(this);
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
+                        .build());
+
+
         initializeDepInj(); ///intializing Dagger Dependancy
         intializeRealmInstance(); //intializing Realm Config Instance
 
@@ -59,33 +67,18 @@ public class MainApp extends Application {
 
     }
 
-    public static MainApp getMainAppApplication() {
-
-        return app;
-    }
 
 
     public void intializeRealmInstance() {
-
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
-                        .build());
-
-
         // Initialize Realm
         Realm.init(app); // Initialize Realm. Should only be done once when the application starts.
         RealmConfiguration realmConfig = new RealmConfiguration.Builder().build();
-
         Realm.deleteRealm(realmConfig); // Delete Realm between app restarts.
-
-
         Realm.setDefaultConfiguration(realmConfig);
         this.realm = Realm.getDefaultInstance();
     }
 
-    public static  boolean isInternetAvailable() {
+    public static boolean isInternetAvailable() {
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -106,9 +99,11 @@ public class MainApp extends Application {
         } finally {
             socket = null;
         }
-        Log.e("MainApp","ConnectionState---->"+connected);
+        Log.e("MainApp", "ConnectionState---->" + connected);
         return connected;
     }
+
+
 
 }
 

@@ -1,6 +1,7 @@
 package com.example.networkmodule.simpleJsonRequest;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.util.Log;
 
 import com.android.volley.Cache;
@@ -36,6 +37,7 @@ public abstract class Url_JsonRequest {
     private RequestQueue requestQueue;
     private Context activityContext;
     private String requsetUrl;
+    private String tag="Url_JsonRequest";
 
     public Url_JsonRequest(Context context) {
         activityContext = context;
@@ -101,13 +103,13 @@ public abstract class Url_JsonRequest {
                 try {
 
                     rPresenterRequest.jsonRequest(new JSONObject(response));  ///recived action from presenter
-                    Log.e(TAG, "Json converted----------->" + new JSONObject(response).toString());
-                    Log.e(TAG, "url is---->" + mLoginUrl);
+                    Log.e(tag, "Json converted----------->" + new JSONObject(response).toString());
+                    Log.e(tag, "url is---->" + mLoginUrl);
 
                 } catch (Exception e) {
-                    Log.e(TAG, "Error---->: \"" + e.toString() + "\"");
-                    Log.e(TAG, "Could not parse Returned JSON as Response---->: \"" + response + "\"");
-                    Log.e(TAG, "url is---->" + mLoginUrl);
+                    Log.e(tag, "Error---->: \"" + e.getMessage() + "\"");
+                    Log.e(tag, "Could not parse Returned JSON as Response---->: \"" + response + "\"");
+                    Log.e(tag, "url is---->" + mLoginUrl);
                     rPresenterRequest.jsonRequest(null);  ///recived action from presenter
                 }
             }
@@ -133,6 +135,6 @@ public abstract class Url_JsonRequest {
 
     public interface PresenterRequest {
         //// implement this interFace an handle recived obj from Request
-        public void jsonRequest(JSONObject jsonObjectobj);
+         void jsonRequest(JSONObject jsonObjectobj);
     }
 }
