@@ -7,5 +7,6 @@
     <string name="fragment_five">Fragmet_Five</string>
     <string name="facebook_app_id">1211618165631206</string>
     <string name="fb_login_protocol_scheme">fb1211618165631206</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA6dRCHll8aVBxo1hZVN2JU2Q1kov0cfaQ</string>
 
 </resources>

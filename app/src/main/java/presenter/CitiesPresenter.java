@@ -37,37 +37,35 @@ public class CitiesPresenter
 public CitiesPresenter(CitiesFragment frg_context)
         {
             citiesFragmentContext=frg_context;
-
-
-            presenterRequest=new Url_JsonRequest.PresenterRequest(){
-                @Override
-                public void jsonRequest(JSONObject jsonObjectobj) {
-                    Log.e("CitiesPresenter", "Json converted----------->" + jsonObjectobj.toString());
-                    weatherItems=jsonObjFetcher.fetchWeatherObj(jsonObjectobj);
-                    Log.e("WeatherModel"," Weather Item----->"+weatherItems.get(0).get("weather_id"));
-                    weatherModel.saveWeatherItem(weatherItems);
-
-                    citiesFragmentContext.city_list.setAdapter(getCitiesAdapter());
-                    citiesWeatherAdapter.notifyDataSetChanged();
-
-                }
-            };
         }
 
     public void loadUrl() {
 
+
+
+        presenterRequest=new Url_JsonRequest.PresenterRequest(){
+            @Override
+            public void jsonRequest(JSONObject jsonObjectobj) {
+                Log.e("CitiesPresenter", "Json converted----------->" + jsonObjectobj.toString());
+                weatherItems=jsonObjFetcher.fetchWeatherObj(jsonObjectobj);
+                Log.e("WeatherModel"," Weather Item----->"+weatherItems.get(0).get("weather_id"));
+                weatherModel.saveWeatherItem(weatherItems);
+                citiesFragmentContext.city_list.setAdapter(getCitiesAdapter());
+                citiesWeatherAdapter.notifyDataSetChanged();
+
+            }
+        };
 
         url_jsonRequest = new Url_JsonRequest(citiesFragmentContext.getActivity()) {
             @Override
             public String getUrl() {
                 return weatherUr;
             }
-
             @Override
             public Url_JsonRequest.PresenterRequest getPresenterRequest() {
-                return presenterRequest;
-            }
+                return presenterRequest;}
         };
+
         url_jsonRequest.sentRequest(false);
     }
 

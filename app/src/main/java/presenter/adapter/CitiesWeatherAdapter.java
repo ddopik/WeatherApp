@@ -80,11 +80,13 @@ public class CitiesWeatherAdapter extends BaseAdapter {
 
 
 
-            weatherItem_viewHolder.city_name.setText(cityWeather_items.get(position).getCityName());
-            weatherItem_viewHolder.item_wind_speed.setText(cityWeather_items.get(position).getWind_spped() + "");
-            weatherItem_viewHolder.item_wind_degree.setText(cityWeather_items.get(position).getDeg()+"");
-            weatherItem_viewHolder.item_pressure.setText(cityWeather_items.get(position).getPressure()+"");
-            weatherItem_viewHolder.item_humidity.setText(cityWeather_items.get(position).getHumidity()+"");
+            weatherItem_viewHolder.item_id.setText(cityWeather_items.get(position).getCity_id()+"");
+            weatherItem_viewHolder.city_name.setText("City Name : "+cityWeather_items.get(position).getCityName());
+            weatherItem_viewHolder.weather_main.setText(cityWeather_items.get(position).getTemp()+" °C");
+            weatherItem_viewHolder.item_wind_speed.setText("Wind : " +cityWeather_items.get(position).getWind_spped() +" m/s");
+            weatherItem_viewHolder.item_wind_degree.setText("degree : "+cityWeather_items.get(position).getDeg()+"");
+            weatherItem_viewHolder.item_pressure.setText("Pressure : "+cityWeather_items.get(position).getPressure()+" hpa");
+            weatherItem_viewHolder.item_humidity.setText("Humidity : "+cityWeather_items.get(position).getHumidity()+" %");
 
         return convertView;
     }
@@ -118,8 +120,12 @@ public class CitiesWeatherAdapter extends BaseAdapter {
 
     public class WeatherItem_viewHolder{
 
+        @BindView(R.id.item_id)
+        TextView item_id;
         @BindView(R.id.item_city_name)
         TextView city_name;
+        @BindView(R.id.weather_main)
+        TextView weather_main;
         @BindView(R.id.item_wind_speed)
         TextView item_wind_speed;
         @BindView(R.id.item_wind_degree)

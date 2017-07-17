@@ -85,4 +85,17 @@ public class WeatherActivity extends AppCompatActivity {
             return mFragmentTitleList.get(position);
         }
     }
+
+
+    public void showEditDialog(int city_id) {
+        FragmentManager fm = getSupportFragmentManager();
+        WeatherDialog_fragment weatherDialog_fragment = WeatherDialog_fragment.newInstance("Weather title");
+        ///////
+        Bundle bundle = new Bundle();
+        bundle.putInt("city_id", city_id);
+// set Fragmentclass Arguments
+        weatherDialog_fragment.setArguments(bundle);
+        weatherDialog_fragment.show(fm, "weatherDialog");
+    }
+
 }

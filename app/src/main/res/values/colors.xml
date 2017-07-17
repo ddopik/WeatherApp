@@ -7,6 +7,7 @@
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#c8e8ff</color>
+
     <color name="explore_fragment_background">#ececec</color>
 
     <color name="white">#ffffff</color>
@@ -15,6 +16,11 @@
     <color name="feed_item_border">#c2c3c8</color>
     <color name="link">#0a80d1</color>
     <color name="timestamp">#a0a3a7</color>
+    <color name="dark_blue">#180065</color>
+    <color name="light_blue">#334ee9ff</color>
+    <color name="medium_green">#3d853e</color>
+    <color name="light_green">#3c2ae668</color>
+
 
 </resources>
 

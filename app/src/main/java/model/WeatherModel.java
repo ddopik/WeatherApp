@@ -63,4 +63,10 @@ public class WeatherModel {
         return arrayList;
     }
 
+    public CityWeather_Item getSingleItem(int itemID)
+    {
+        CityWeather_Item cityWeather_item=MainApp.realm.where(CityWeather_Item.class).equalTo("city_id",itemID).findFirst();
+        return cityWeather_item;
+    }
+
 }

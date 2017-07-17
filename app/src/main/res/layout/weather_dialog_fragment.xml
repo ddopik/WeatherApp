@@ -21,7 +21,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:orientation="vertical"
-            android:id="@+id/linearLayout2">
+            android:id="@+id/linearLayout">
 
             <TextView
                 android:id="@+id/item_id"
@@ -30,15 +30,16 @@
                 android:text="16:00"
                 android:textColor="?android:textColorPrimary"
                 android:textSize="16dp"
-                android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_city_name"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="City Name"
-                android:textSize="26dp" />
+                android:textSize="16dp" />
 
             <TextView
                 android:id="@+id/item_wind_speed"
@@ -63,36 +64,52 @@
                 android:text="Pressure: 0 hpa"
                 android:textSize="16dp" />
 
+
             <TextView
                 android:id="@+id/item_humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Humidity: 0 %"
                 android:textSize="16dp" />
+
+
+            <TextView
+                android:id="@+id/item_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="item_description :"
+                android:textSize="16dp" />
+
         </LinearLayout>
 
         <TextView
-            android:id="@+id/weather_main"
+            android:id="@+id/current_main_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="26dp"
             android:layout_weight="1"
             android:text="o"
-            android:textSize="38dp"
-            android:layout_marginEnd="26dp"
-            android:layout_centerVertical="true"
+            android:textSize="48dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/current_min_temp"
+            android:layout_alignStart="@+id/current_min_temp" />
+
+        <TextView
+            android:id="@+id/current_min_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 °C"
+            android:textSize="22dp"
+            android:layout_below="@+id/current_max_temp"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
-
-        <!--<TextView-->
-        <!--android:id="@+id/itemTemperature"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="0 °C"-->
-        <!--android:textSize="22dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--android:layout_below="@+id/itemIcon"-->
-        <!--android:layout_alignRight="@+id/itemIcon"-->
-        <!--android:layout_alignEnd="@+id/itemIcon" />-->
+        <TextView
+            android:id="@+id/current_max_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 °C"
+            android:textSize="22dp"
+            android:layout_below="@+id/current_main_temp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>
