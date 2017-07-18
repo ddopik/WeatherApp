@@ -1,12 +1,15 @@
-package view;
+package com.example.networkmodule.locations;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ddopikmain.seedapplication.R;
+ ;
+
+import com.example.networkmodule.R;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
@@ -17,21 +20,18 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-import model.WeatherModel;
-import model.tables.CityWeather_Item;
-import presenter.netWork.GPSTracker;
 
 
 /**
  * Created by ddopi on 7/14/2017.
  */
 
-public class MapFragment extends Fragment  {
+public class SimpleMapFragment extends Fragment  {
 
     MapView mMapView;
     private GoogleMap googleMap;
-    private WeatherModel weatherModel=new WeatherModel();
-    private ArrayList<CityWeather_Item> cityWeather_items;
+//    private WeatherModel weatherModel=new WeatherModel();
+//    private ArrayList<CityWeather_Item> cityWeather_items;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,21 +54,20 @@ public class MapFragment extends Fragment  {
                 googleMap = mMap;
 
                 // For dropping a marker at a point on the Map
+//                cityWeather_items= weatherModel.getCityWeather_Items();
+//                for(CityWeather_Item item:cityWeather_items)
+//                {
+//
+//                    LatLng city_cordination = new LatLng(item.getCord_lat(),item.getCord_lon());
+//                    googleMap.addMarker(new MarkerOptions().position(city_cordination).title(item.getCityName()).snippet(item.getTemp()+"C")).setTag(item);
+//                }
 
-                cityWeather_items= weatherModel.getCityWeather_Items();
-                for(CityWeather_Item item:cityWeather_items)
-                {
-
-                    LatLng city_cordination = new LatLng(item.getCord_lat(),item.getCord_lon());
-                    googleMap.addMarker(new MarkerOptions().position(city_cordination).title(item.getCityName()).snippet(item.getTemp()+"C")).setTag(item);
-                }
-
-                GPSTracker gpsTracker=new GPSTracker(getActivity());
+                GPSTrackerٍSingleton gpsTracker=new GPSTrackerٍSingleton(getActivity());
                 gpsTracker.getLocation();
 //                Toast.makeText(getActivity(),"lat"+gpsTracker.getLatitude(),Toast.LENGTH_SHORT).show();
 
                 // For showing a move to my location button
-                GPSTracker.checkPermission(getActivity());
+                GPSTrackerٍSingleton.checkPermission(getActivity());
                 googleMap.setMyLocationEnabled(true);
 
         googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
@@ -77,9 +76,10 @@ public class MapFragment extends Fragment  {
             @Override
             public void onInfoWindowClick(Marker marker)
             {
-                CityWeather_Item cityWeather_item=(CityWeather_Item) marker.getTag();
-                int id=cityWeather_item.getCity_id();
-                ((WeatherActivity)getActivity()).showWeatherDialog(id);
+//                implement youtr action here
+//                CityWeather_Item cityWeather_item=(CityWeather_Item) marker.getTag();
+//                int id=cityWeather_item.getCity_id();
+//                ((Activity)getActivity()).showWeatherDialog(id);
 
             }
 

@@ -1,4 +1,4 @@
-package presenter.netWork;
+package com.example.networkmodule.locations;
 
 import android.Manifest;
 import android.app.Activity;
@@ -18,7 +18,9 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 
-public class GPSTracker extends Service implements LocationListener {
+//follow intialiazion not to make this class work correctly
+
+public class GPSTrackerٍSingleton extends Service implements LocationListener {
 
     private final Context mContext;
     private Activity activityContext;
@@ -44,7 +46,7 @@ public class GPSTracker extends Service implements LocationListener {
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
-    public GPSTracker(Context context) {
+    public GPSTrackerٍSingleton(Context context) {
         this.mContext = context;
         this.activityContext = (Activity) context;
         getLocation();
@@ -189,7 +191,7 @@ public class GPSTracker extends Service implements LocationListener {
 
     public void stopUsingGPS() {
         if (locationManager != null) {
-            locationManager.removeUpdates(presenter.netWork.GPSTracker.this);
+            locationManager.removeUpdates(GPSTrackerٍSingleton.this);
         }
     }
 

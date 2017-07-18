@@ -72,3 +72,18 @@ Add a meta-data element, an activity for Facebook, and an activity and intent fi
     copy the hash key from console and past it in facebook console client
    this step are exampled here https://developers.facebook.com/docs/facebook-login/android
 ====================================================================================================
+For GPSTrakerSingleton===
+=========================
+
+1. add those permetion at you manifest
+    <uses-permission android:name="android.permission.INTERNET" />                  <!-- verify if connected to the internet -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />      <!-- verify if connected to any network -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />      <!-- verify location using GPS, give precise location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+2. add depandaces in app gradle
+    --->    ///google-Maps
+            compile 'com.google.android.gms:play-services:9.4.0'
+            compile 'com.google.android.gms:play-services-location:9.4.0'
+
+3. get google maps API key and save it in your String.xml as follows
+            ---><string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA6dRCHll8aVBxo1hZVN2JU2Q1kov0cfaQ</string>

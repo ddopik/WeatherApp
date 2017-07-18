@@ -98,6 +98,7 @@ public class WeatherDialog_fragment extends DialogFragment {
         // Show soft keyboard automatically and request focus to field
 //        mEditText.requestFocus();
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
     }
 
     @Override

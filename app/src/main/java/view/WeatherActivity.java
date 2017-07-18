@@ -1,5 +1,6 @@
 package view;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -90,6 +91,7 @@ public class WeatherActivity extends AppCompatActivity {
     public void showWeatherDialog(int city_id) {
         FragmentManager fm = getSupportFragmentManager();
         WeatherDialog_fragment weatherDialog_fragment = WeatherDialog_fragment.newInstance("Weather title");
+          weatherDialog_fragment.setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomDialog);
         ///////
         Bundle bundle = new Bundle();
         bundle.putInt("city_id", city_id);

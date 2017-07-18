@@ -90,26 +90,30 @@
             android:text="o"
             android:textSize="48dp"
             android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/current_min_temp"
-            android:layout_alignStart="@+id/current_min_temp" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
         <TextView
             android:id="@+id/current_min_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="11dp"
             android:text="0 °C"
-            android:textSize="22dp"
+            android:textSize="12dp"
             android:layout_below="@+id/current_max_temp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignLeft="@+id/current_main_temp"
+            android:layout_alignStart="@+id/current_main_temp"
+            android:layout_marginTop="14dp" />
         <TextView
+            android:layout_marginLeft="8dp"
             android:id="@+id/current_max_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0 °C"
-            android:textSize="22dp"
+            android:textSize="12dp"
+            android:layout_marginTop="13dp"
             android:layout_below="@+id/current_main_temp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignLeft="@+id/current_min_temp"
+            android:layout_alignStart="@+id/current_min_temp" />
     </RelativeLayout>
 </LinearLayout>
