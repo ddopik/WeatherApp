@@ -87,7 +87,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
 
-    public void showEditDialog(int city_id) {
+    public void showWeatherDialog(int city_id) {
         FragmentManager fm = getSupportFragmentManager();
         WeatherDialog_fragment weatherDialog_fragment = WeatherDialog_fragment.newInstance("Weather title");
         ///////

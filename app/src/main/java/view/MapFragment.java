@@ -59,30 +59,45 @@ public class MapFragment extends Fragment  {
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
 
-                // For showing a move to my location button
-                googleMap.setMyLocationEnabled(true);
+
+
 
                 // For dropping a marker at a point on the Map
 
                 cityWeather_items= weatherModel.getCityWeather_Items();
                 for(CityWeather_Item item:cityWeather_items)
                 {
-                    LatLng sydney = new LatLng(item.getCord_lat(),item.getCord_lon());
-                    googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
+                    LatLng city_cordination = new LatLng(item.getCord_lat(),item.getCord_lon());
+                    googleMap.addMarker(new MarkerOptions().position(city_cordination).title(item.getCityName()).snippet(item.getCity_id()+""));
                 }
 
                 GPSTracker gpsTracker=new GPSTracker(getActivity());
                 gpsTracker.getLocation();
-                Toast.makeText(getActivity(),"lat"+gpsTracker.getLatitude(),Toast.LENGTH_SHORT).show();
-//                LatLng sydney2 = new LatLng(-33, 141);
-//
-//                googleMap.addMarker(new MarkerOptions().position(sydney2).title("Marker Title").snippet("Marker Description"));
+//                Toast.makeText(getActivity(),"lat"+gpsTracker.getLatitude(),Toast.LENGTH_SHORT).show();
 
+                // For showing a move to my location button
+                googleMap.setMyLocationEnabled(true);
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener()
+        {
+
+            @Override
+            public boolean onMarkerClick(Marker arg0) {
+                ((WeatherActivity)getActivity()).showWeatherDialog(Integer.parseInt(arg0.getSnippet()));
+
+                return true;
+            }
+
+        });
                 // For zooming automatically to the location of the marker
 //                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
 //                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
+
+
+
+
 
         return rootView;
     }

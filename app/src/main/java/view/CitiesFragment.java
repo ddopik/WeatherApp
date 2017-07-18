@@ -1,7 +1,6 @@
 package view;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import presenter.CitiesPresenter;
-import presenter.adapter.CitiesWeatherAdapter;
 
 /**
  * Created by ddopi on 7/14/2017.
@@ -58,7 +56,7 @@ public class CitiesFragment extends Fragment {
 
                 TextView cityID_view=(TextView) arg1.findViewById(R.id.item_id);
                 int id=Integer.parseInt(cityID_view.getText()+"");
-                ((WeatherActivity) getActivity()).showEditDialog(id);
+                ((WeatherActivity) getActivity()).showWeatherDialog(id);
             }
 
         });
