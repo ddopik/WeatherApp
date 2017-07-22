@@ -96,7 +96,7 @@ public abstract class GPSTrackerٍSingleton extends Service implements LocationL
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 Log.e("GPSTrackerٍSingleton", "no network provider is enabled");
-                Toast.makeText(getFragmentContext().getActivity(), "Please Enable GPS ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getFragmentContext().getActivity(), "Please Enable GPS to accure your current Location ", Toast.LENGTH_SHORT).show();
                 // no network provider is enabled
             } else {
                 this.canGetLocation = true;
