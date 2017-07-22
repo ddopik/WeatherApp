@@ -91,7 +91,7 @@ public class MapFragment extends Fragment  {
                     public GoogleMap getMap(){ return  getGoogleMap();}
                 };
                 // For showing a move to my location button
-                gpsTracker.getLocation();
+                gpsTracker.getLocation(); //just calling it to verify GPS and cellur
                 gpsTracker.setMyCurrentLocationEnabled(true);
 
 
