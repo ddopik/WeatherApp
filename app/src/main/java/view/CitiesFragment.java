@@ -3,6 +3,7 @@ package view;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ddopikmain.seedapplication.R;
 import com.example.networkmodule.simpleJsonRequest.Url_JsonRequest;
@@ -41,6 +43,7 @@ public class CitiesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.e("CitiesFragment","CitiesFragment ----> OnCreate()");
         mainView=inflater.inflate(R.layout.cities_fragment, container, false);
         unbinder=ButterKnife.bind(this,mainView);
         citiesPresenter=new CitiesPresenter(this);
@@ -62,6 +65,7 @@ public class CitiesFragment extends Fragment {
         });
 
 
+
         search_view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
@@ -74,8 +78,13 @@ public class CitiesFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 // TODO Auto-generated method stub
-                
-                citiesPresenter.citiesWeatherAdapter.filter(newText);
+                try {
+                    citiesPresenter.citiesWeatherAdapter.filter(newText);
+                }catch (Exception e)
+                {
+                    Log.e("CitiesFragment","Refreash error of onQueryTextChange()------> "+e.getMessage());
+                }
+
                 return false;
             }
         });

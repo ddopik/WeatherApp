@@ -1,6 +1,7 @@
 package com.example.networkmodule.locations;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Service;
@@ -11,18 +12,24 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.google.android.gms.maps.GoogleMap;
 
 
 //follow intialiazion not to make this class work correctly
 
-public class GPSTrackerٍSingleton extends Service implements LocationListener {
+public abstract class GPSTrackerٍSingleton extends Service implements LocationListener {
 
     private final Context mContext;
+    //    private final Context fragmentContext;
     private Activity activityContext;
 
     // flag for GPS status
@@ -49,40 +56,47 @@ public class GPSTrackerٍSingleton extends Service implements LocationListener {
     public GPSTrackerٍSingleton(Context context) {
         this.mContext = context;
         this.activityContext = (Activity) context;
-        getLocation();
-
     }
 
-    public static boolean checkPermission(final Context context) {
-        return ActivityCompat.checkSelfPermission( context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+    public abstract Fragment getFragmentContext();
+
+    public abstract GoogleMap getMap();
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public boolean checkPermission(final Context context) {
+        return context.checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void setMyCurrentLocationEnabled(boolean isEnabled) {
+        if (checkPermission(activityContext)) {
+            // you shoud implement onRequestPermissionsResult
+            // in your activity or fragment to handle request callBack
+            getMap().setMyLocationEnabled(isEnabled);
+        } else {
+            getFragmentContext().requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+        }
     }
 
     public Location getLocation() {
         try {
-//            showSettingsAlert();
             locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
 
             // getting GPS status
             isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
             // getting network status
             isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
 
-            try {
-
-                if (!checkPermission(activityContext)) {
-                    Log.e("GPSTrackerٍSingleton", "checkPermission");
-                    ActivityCompat.requestPermissions(activityContext, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e("GPSTrackerٍSingleton", "Error Here---> " + e.getMessage());
+            if (!checkPermission(activityContext)) {
+                Log.e("GPSTrackerٍSingleton", "ask for checkPermission");
+                getFragmentContext().requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
             }
 
 
             if (!isGPSEnabled && !isNetworkEnabled) {
                 Log.e("GPSTrackerٍSingleton", "no network provider is enabled");
+                Toast.makeText(getFragmentContext().getActivity(), "Please Enable GPS or cellur NetWork", Toast.LENGTH_SHORT).show();
                 // no network provider is enabled
             } else {
                 this.canGetLocation = true;
@@ -101,7 +115,6 @@ public class GPSTrackerٍSingleton extends Service implements LocationListener {
                 // if GPS Enabled get lat/long using GPS Services
                 if (isGPSEnabled) {
                     if (location == null) {
-
                         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
                         Log.e("GPSTrackerٍSingleton", "GPS Enabled");
                         if (locationManager != null) {
@@ -112,6 +125,8 @@ public class GPSTrackerٍSingleton extends Service implements LocationListener {
                             }
                         }
                     }
+                } else {
+                    showSettingsAlert();
                 }
             }
 
@@ -121,6 +136,9 @@ public class GPSTrackerٍSingleton extends Service implements LocationListener {
 
         return location;
     }
+
+
+
 
     /**
      * Function to get latitude

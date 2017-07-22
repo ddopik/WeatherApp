@@ -1,6 +1,7 @@
 package model.tables;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by ddopi on 7/14/2017.
@@ -9,7 +10,7 @@ import io.realm.RealmObject;
 public class CityWeather_Item extends RealmObject {
 
 
-
+    @PrimaryKey
     private int city_id;
     private String cityName;
     private Float cord_lon;
@@ -127,8 +128,6 @@ public class CityWeather_Item extends RealmObject {
     public void setWeather_description(String weather_description) {
         this.weather_description = weather_description;
     }
-
-
 
 
 }

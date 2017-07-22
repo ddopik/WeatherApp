@@ -117,7 +117,8 @@ public abstract class Url_JsonRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("VOLLEY", "error with" + error.toString());
+                Log.e("Url_JsonRequest", "error with --->" + error.toString());
+                rPresenterRequest.jsonRequest(null);  ///recived action from presenter
             }
         }) {
 

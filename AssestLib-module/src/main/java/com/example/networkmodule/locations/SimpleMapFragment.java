@@ -2,6 +2,7 @@ package com.example.networkmodule.locations;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -30,16 +33,16 @@ public class SimpleMapFragment extends Fragment  {
 
     MapView mMapView;
     private GoogleMap googleMap;
+    private GPSTrackerٍSingleton gpsTracker;
 //    private WeatherModel weatherModel=new WeatherModel();
 //    private ArrayList<CityWeather_Item> cityWeather_items;
-
+private Unbinder unbinder;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.map_fragment, container, false);
-
+        unbinder= ButterKnife.bind(this,rootView);
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
-
         mMapView.onResume(); // needed to get the map to display immediately
 
         try {
@@ -48,6 +51,13 @@ public class SimpleMapFragment extends Fragment  {
             e.printStackTrace();
         }
 
+          this.loadMap();
+
+        return rootView;
+    }
+
+    public void loadMap()
+    {
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap mMap) {
@@ -62,41 +72,57 @@ public class SimpleMapFragment extends Fragment  {
 //                    googleMap.addMarker(new MarkerOptions().position(city_cordination).title(item.getCityName()).snippet(item.getTemp()+"C")).setTag(item);
 //                }
 
-                GPSTrackerٍSingleton gpsTracker=new GPSTrackerٍSingleton(getActivity());
-                gpsTracker.getLocation();
+                gpsTracker=new GPSTrackerٍSingleton(getActivity()){
+                    @Override
+                    public Fragment getFragmentContext() {
+                        return SimpleMapFragment.this;
+                    }
+
+                    @Override
+                    public GoogleMap getMap() {
+                        return getGoogleMap();
+                    }
+                };
+//                gpsTracker.getLocation();
 //                Toast.makeText(getActivity(),"lat"+gpsTracker.getLatitude(),Toast.LENGTH_SHORT).show();
 
                 // For showing a move to my location button
-                GPSTrackerٍSingleton.checkPermission(getActivity());
+                gpsTracker.checkPermission(getActivity());
                 googleMap.setMyLocationEnabled(true);
 
-        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
-        {
+                googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener()
+                {
 
-            @Override
-            public void onInfoWindowClick(Marker marker)
-            {
+                    @Override
+                    public void onInfoWindowClick(Marker marker)
+                    {
 //                implement youtr action here
 //                CityWeather_Item cityWeather_item=(CityWeather_Item) marker.getTag();
 //                int id=cityWeather_item.getCity_id();
 //                ((Activity)getActivity()).showWeatherDialog(id);
 
-            }
+                    }
 
-        });
+                });
                 // For zooming automatically to the location of the marker
 //                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
 //                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
-
-
-
-
-
-        return rootView;
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (gpsTracker.checkPermission(getActivity())) {
+            googleMap.setMyLocationEnabled(true);
+        }
+    }
+
+    public GoogleMap getGoogleMap()
+    {
+        return this.googleMap;
+    }
     @Override
     public void onResume() {
         super.onResume();
@@ -113,6 +139,7 @@ public class SimpleMapFragment extends Fragment  {
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+        unbinder.unbind();
     }
 
     @Override

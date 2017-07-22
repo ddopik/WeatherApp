@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import io.realm.Realm;
 import io.realm.RealmResults;
 import model.tables.CityWeather_Item;
 import model.tables.User;
@@ -23,8 +24,7 @@ public class WeatherModel {
 
         for (int i = 0; i < weatherItem.size(); i++) {
             try {
-                MainApp.realm.beginTransaction();
-                CityWeather_Item cityWeather_item = MainApp.realm.createObject(CityWeather_Item.class);
+                CityWeather_Item cityWeather_item = new CityWeather_Item();
                 cityWeather_item.setCity_id(Integer.parseInt(weatherItem.get(i).get("weather_id")));
                 cityWeather_item.setCityName(weatherItem.get(i).get("weather_name"));
                 cityWeather_item.setCord_lat(Float.parseFloat((weatherItem.get(i).get("Weather_lat"))));
@@ -38,9 +38,11 @@ public class WeatherModel {
                 cityWeather_item.setDeg(Float.parseFloat(weatherItem.get(i).get("Weather_deg")));
                 cityWeather_item.setWeather_main(weatherItem.get(i).get("Weather_main"));
                 cityWeather_item.setWeather_description(weatherItem.get(i).get("Weather_description"));
-                MainApp.realm.commitTransaction();
-//                saveItemToRealm(cityWeather_item);
 
+
+                MainApp.realm.beginTransaction();
+                MainApp.realm.copyToRealmOrUpdate(cityWeather_item);
+                MainApp.realm.commitTransaction();
             } catch (Exception e) {
                 Log.e("WeatherModel", "Error Saving Weather Item----->" + e.getMessage());
             }
@@ -48,11 +50,7 @@ public class WeatherModel {
         }
     }
 
-//    public RealmResults<CityWeather_Item> getCityWeather_Items()
-//    {
-//        RealmResults<CityWeather_Item> CityWeather_Items=MainApp.realm.where(CityWeather_Item.class).findAll();
-//        return CityWeather_Items;
-//    }
+
 
     public ArrayList<CityWeather_Item> getCityWeather_Items() {
         ArrayList<CityWeather_Item> arrayList=new ArrayList<CityWeather_Item>();

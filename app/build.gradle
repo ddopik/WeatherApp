@@ -1,3 +1,4 @@
+
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 android {
@@ -64,7 +65,7 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.google.dagger:dagger:2.8'
     compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.android.support:support-v4:25.3.0'
+    compile 'com.android.support:support-v4:25.3.1'
     testCompile 'junit:junit:4.12'
     provided 'javax.annotation:jsr250-api:1.0'
 
