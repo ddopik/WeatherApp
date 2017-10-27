@@ -5,7 +5,9 @@ package presenter.app_config;
  */
 
 import android.app.Application;
+import android.content.Context;
 import android.os.StrictMode;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.facebook.stetho.Stetho;
@@ -42,11 +44,16 @@ public class MainApp extends Application {
     public static final String bestCources_flag = "2";
     public static final String offers_flag = "3";
 
-
+    @Override
+    protected void attachBaseContext(Context context) {
+        super.attachBaseContext(context);
+        MultiDex.install(this);
+    }
     @Override
     public void onCreate() {
         super.onCreate();
         this.app = this;
+//        MultiDex.install(this);
 //        Stetho.initializeWithDefaults(this);
         Stetho.initialize(
                 Stetho.newInitializerBuilder(this)
